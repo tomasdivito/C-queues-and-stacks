@@ -22,8 +22,14 @@ int main(){
   queue.lastElement = NULL;
 
   enqueue(queue, 25);
+  printf("current first value: %d", queue.firstElement->value);
+  printf("current last value: %d", queue.lastElement->value);
   enqueue(queue, 30);
+  printf("current first value: %d", queue.firstElement->value);
+  printf("current last value: %d", queue.lastElement->value);
   dequeue(queue);
+  printf("current first value: %d", queue.firstElement->value);
+  printf("current last value: %d", queue.lastElement->value);
 
   return 0;
 }
@@ -46,7 +52,7 @@ void enqueue(struct Queue queue, int value){
   }
 
 
-  showCurrentQueue(queue, "The queue after enqueue");
+  //showCurrentQueue(queue, "The queue after enqueue");
 }
 
 void dequeue(struct Queue queue){
@@ -64,7 +70,7 @@ void dequeue(struct Queue queue){
     }
   }
 
-  showCurrentQueue(queue, "The queue after dequeue");
+  //showCurrentQueue(queue, "The queue after dequeue");
 }
 
 void showCurrentQueue(struct Queue queue, char message[81]){
