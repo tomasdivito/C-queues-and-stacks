@@ -13,30 +13,19 @@ struct Linked_List {
 void add(struct Linked_List*, int, int);
 void delete(struct Linked_List*, int);
 void returnOutOfIndexException();
+void returnEmptyListException();
 void show_current_list(struct Linked_List*);
 
 int main() {
   struct Linked_List l_list;
   l_list.first = NULL;
 
-  add(&l_list, 0, 4);
-  show_current_list(&l_list);
   add(&l_list, 0, 5);
+  add(&l_list, 1, 3);
+  add(&l_list, 1, 2);
   show_current_list(&l_list);
-  add(&l_list, 1, 6);
-  show_current_list(&l_list);
-  add(&l_list, 2, 7);
-  show_current_list(&l_list);
-  add(&l_list, 3, 10);
-  show_current_list(&l_list);
-  add(&l_list, 5, 30); //this should add a 30 in the last element
-  show_current_list(&l_list);
-  add(&l_list, 7, 20); //this is the only one that should receive the exception
-  show_current_list(&l_list);
-  add(&l_list, 8, 20); //this is the only one that should receive the exception
-  show_current_list(&l_list);
-  add(&l_list, 6, 20);
-  show_current_list(&l_list);
+
+  delete(&l_list, 0);
 
   return 0;
 }
@@ -91,11 +80,61 @@ void add(struct Linked_List* l_list, int position, int value) {
 }
 
 void delete(struct Linked_List* l_list, int position) {
+  struct Node *currentNode;
+  struct Node *pastNode;
+  int i = 0;
+  int nextIsNull = 0;
 
+  if(l_list->first != NULL) {
+    currentNode = l_list->first;
+    while(i <= position && nextIsNull < 1) {
+      if(i == position) {
+        if(pastNode == NULL) {
+          if(currentNode->next != NULL){
+            l_list->first = currentNode->next;
+            free(currentNode);
+          }
+          else {
+            l_list->first = NULL;
+            free(currentNode);
+          }
+        }
+        else {
+          if(currentNode->next != NULL) {
+            pastNode->next = currentNode->next;
+            free(currentNode);
+          }
+          else {
+            pastNode->next = NULL;
+            free(currentNode);
+          }
+        }
+        break;
+      }
+
+      if(currentNode != NULL) {
+        pastNode = currentNode;
+        currentNode = currentNode->next;
+      }
+      else {
+        nextIsNull = 1;
+
+        returnOutOfIndexException();
+      }
+      ++i;
+    }
+  }
+  else {
+    returnEmptyListException();
+  }
 }
 
 void returnOutOfIndexException() {
   printf("Out of index exception\n");
+}
+
+void returnEmptyListException() {
+  printf("Empty list exception\n");
 }
 
 void show_current_list(struct Linked_List* l_list) {
