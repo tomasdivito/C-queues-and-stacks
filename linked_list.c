@@ -23,7 +23,19 @@ int main() {
   show_current_list(&l_list);
   add(&l_list, 0, 5);
   show_current_list(&l_list);
-  add(&l_list, 2, 6);
+  add(&l_list, 1, 6);
+  show_current_list(&l_list);
+  add(&l_list, 2, 7);
+  show_current_list(&l_list);
+  add(&l_list, 3, 10);
+  show_current_list(&l_list);
+  add(&l_list, 5, 30); //this should add a 30 in the last element
+  show_current_list(&l_list);
+  add(&l_list, 7, 20); //this is the only one that should receive the exception
+  show_current_list(&l_list);
+  add(&l_list, 8, 20); //this is the only one that should receive the exception
+  show_current_list(&l_list);
+  add(&l_list, 6, 20);
   show_current_list(&l_list);
 
   return 0;
@@ -46,36 +58,34 @@ void add(struct Linked_List* l_list, int position, int value) {
   else {
     i = 0;
     nextIsNull = 0;
-    while(i <= position && nextIsNull == 0) {
-      if(i == 0) {
-        currentNode = l_list->first;
-        ++i;
-      }
+    currentNode = l_list->first;
 
+    while(i <= position && nextIsNull < 1) {
       if(i == position) {
         if(pastNode != NULL) {
           pastNode->next = newnode;
         }
+        else {
+          l_list->first = newnode;
+        }
         if(currentNode != NULL) {
           newnode->next = currentNode;
         }
+        else {
+          break;
+        }
       }
 
-      if(currentNode->next != NULL) {
+      if(currentNode != NULL) {
         pastNode = currentNode;
         currentNode = currentNode->next;
-        ++i;
       }
       else {
-        if(currentNode->next == NULL && position == i+1) {
-          currentNode = NULL;
-          ++i;
-        }
-        else {
-          nextIsNull = 1;
-          returnOutOfIndexException();
-        }
+        nextIsNull = 1;
+
+        returnOutOfIndexException();
       }
+      ++i;
     }
   }
 }
@@ -85,7 +95,7 @@ void delete(struct Linked_List* l_list, int position) {
 }
 
 void returnOutOfIndexException() {
-  printf("\n Position value is not valid for the list \n");
+  printf("Out of index exception\n");
 }
 
 void show_current_list(struct Linked_List* l_list) {
@@ -97,6 +107,7 @@ void show_current_list(struct Linked_List* l_list) {
     if(times == 0) {
       currentNode = l_list->first;
       printf("%d ", currentNode->value);
+      times = 1;
     }
     else {
       printf(" %d ", currentNode->value);
@@ -107,8 +118,7 @@ void show_current_list(struct Linked_List* l_list) {
     else {
       nextIsNull = 1;
     }
-    ++times;
   }
 
-  printf("\n");
+  printf("\n\n");
 }
