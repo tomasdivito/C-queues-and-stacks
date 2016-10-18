@@ -31,11 +31,22 @@ int main() {
   delete(&l_list, 0);
   show_current_list(&l_list);
 
-
   delete(&l_list, 20);
   show_current_list(&l_list);
 
   delete(&l_list, 0);
+  show_current_list(&l_list);
+
+  add(&l_list, 0, 6);
+  show_current_list(&l_list);
+
+  add(&l_list, 0, 55);
+  show_current_list(&l_list);
+
+  add(&l_list, 2, 21);
+  show_current_list(&l_list);
+
+  delete(&l_list, 1);
   show_current_list(&l_list);
 
   return 0;
@@ -84,6 +95,7 @@ void add(struct Linked_List* l_list, int position, int value) {
         nextIsNull = 1;
 
         returnOutOfIndexException();
+        break;
       }
       ++i;
     }
@@ -143,7 +155,7 @@ void returnOutOfIndexException() {
 }
 
 void returnEmptyListException() {
-  printf("Empty list exception\n[*]\n");
+  printf("Empty list exception\n[*]\n\n");
 }
 
 void show_current_list(struct Linked_List* l_list) {
