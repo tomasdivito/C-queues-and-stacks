@@ -25,7 +25,18 @@ int main() {
   add(&l_list, 1, 2);
   show_current_list(&l_list);
 
+  delete(&l_list, 1);
+  show_current_list(&l_list);
+
   delete(&l_list, 0);
+  show_current_list(&l_list);
+
+
+  delete(&l_list, 20);
+  show_current_list(&l_list);
+
+  delete(&l_list, 0);
+  show_current_list(&l_list);
 
   return 0;
 }
@@ -80,8 +91,8 @@ void add(struct Linked_List* l_list, int position, int value) {
 }
 
 void delete(struct Linked_List* l_list, int position) {
-  struct Node *currentNode;
-  struct Node *pastNode;
+  struct Node *currentNode = NULL;
+  struct Node *pastNode = NULL;
   int i = 0;
   int nextIsNull = 0;
 
@@ -109,7 +120,6 @@ void delete(struct Linked_List* l_list, int position) {
             free(currentNode);
           }
         }
-        break;
       }
 
       if(currentNode != NULL) {
@@ -118,7 +128,6 @@ void delete(struct Linked_List* l_list, int position) {
       }
       else {
         nextIsNull = 1;
-
         returnOutOfIndexException();
       }
       ++i;
@@ -134,30 +143,33 @@ void returnOutOfIndexException() {
 }
 
 void returnEmptyListException() {
-  printf("Empty list exception\n");
+  printf("Empty list exception\n[*]\n");
 }
 
 void show_current_list(struct Linked_List* l_list) {
   struct Node* currentNode;
   int nextIsNull = 0;
   int times = 0;
-
-  while(nextIsNull != 1) {
-    if(times == 0) {
-      currentNode = l_list->first;
-      printf("%d ", currentNode->value);
-      times = 1;
+  if(l_list->first != NULL) {
+    while(nextIsNull != 1) {
+      if(times == 0) {
+        currentNode = l_list->first;
+        printf("[%d] ", currentNode->value);
+        times = 1;
+      }
+      else {
+        printf(" [%d] ", currentNode->value);
+      }
+      if(currentNode->next != NULL) {
+        currentNode = currentNode->next;
+      }
+      else {
+        nextIsNull = 1;
+      }
     }
-    else {
-      printf(" %d ", currentNode->value);
-    }
-    if(currentNode->next != NULL) {
-      currentNode = currentNode->next;
-    }
-    else {
-      nextIsNull = 1;
-    }
+    printf("\n\n");
   }
-
-  printf("\n\n");
+  else {
+    returnEmptyListException();
+  }
 }
