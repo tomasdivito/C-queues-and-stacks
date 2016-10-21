@@ -19,34 +19,15 @@ void show_current_list(struct Linked_List*);
 int main() {
   struct Linked_List l_list;
   l_list.first = NULL;
+  int i;
 
-  add(&l_list, 0, 5);
-  add(&l_list, 1, 3);
-  add(&l_list, 1, 2);
+  for(i = 0; i < 11; i++) {
+    add(&l_list, i, i);
+  }
   show_current_list(&l_list);
-
-  delete(&l_list, 1);
-  show_current_list(&l_list);
-
-  delete(&l_list, 0);
-  show_current_list(&l_list);
-
-  delete(&l_list, 20);
-  show_current_list(&l_list);
-
-  delete(&l_list, 0);
-  show_current_list(&l_list);
-
-  add(&l_list, 0, 6);
-  show_current_list(&l_list);
-
-  add(&l_list, 0, 55);
-  show_current_list(&l_list);
-
-  add(&l_list, 2, 21);
-  show_current_list(&l_list);
-
-  delete(&l_list, 1);
+  for(i = 1; i < 9; i+=2) {
+    delete(&l_list, i);
+  }
   show_current_list(&l_list);
 
   return 0;
